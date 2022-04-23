@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/clearcache/', include('clearcache.urls')),
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
+    path('', include('store.urls')),
     
 ]

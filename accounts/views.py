@@ -16,10 +16,6 @@ from . tokens import generate_token
 from django.template import loader
 
 
-# Create your views here.
-def home(request): 
-    return render(request, "index.html")
-
 
 def signup(request):
 
@@ -136,6 +132,10 @@ def signout(request):
     logout(request)
     messages.success(request, "Logged out successfully")
     return redirect('home')
+
+def myaccount(request):
+
+    return render(request, "accounts/myaccount.html") 
 
 
 
