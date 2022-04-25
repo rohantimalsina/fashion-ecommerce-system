@@ -8,8 +8,12 @@ from django.conf.urls.static import static
 urlpatterns = [
     
     path('', views.home, name="home"),
-     
-
+    path('product/<str:slug>/<int:id>',views.product_detail,name='product_detail'),
+    path('add-to-cart/', views.add_to_cart, name="add-to-cart"),
+    path('cart/', views.cart, name="cart"),
+    path('save-review/<int:pid>',views.save_review, name='save-review'),
+    path('checkout/', views.checkout, name="checkout"),
+    
     
     
 

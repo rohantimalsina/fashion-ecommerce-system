@@ -2,6 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.html import mark_safe
 
+
+# Details
+class Detail(models.Model):
+    email = models.EmailField()
+    contact = models.CharField(max_length=12)
+    address = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name_plural='Details'
+
 # Banner
 class Banner(models.Model):
     img=models.ImageField(upload_to="banner/")
@@ -63,6 +73,7 @@ class Product(models.Model):
     sku = models.CharField(max_length=255, unique=True)
     detail=models.TextField()
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
+    price=models.PositiveIntegerField(default=0)
     status=models.BooleanField(default=True)
     is_featured=models.BooleanField(default=False)
 
@@ -77,7 +88,6 @@ class ProductAttribute(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
     color=models.ForeignKey(Color,on_delete=models.CASCADE)
     size=models.ForeignKey(Size,on_delete=models.CASCADE)
-    price=models.PositiveIntegerField(default=0)
     image=models.ImageField(upload_to="product/",null=True)
 
     class Meta:
@@ -117,6 +127,8 @@ class Address(models.Model):
     place = models.CharField(max_length=150, verbose_name="Nearest Location")
     city = models.CharField(max_length=150, verbose_name="City")
     state = models.CharField(max_length=150, verbose_name="State")
+    class Meta:
+        verbose_name_plural='Addresses'
 
     def __str__(self):
         return self.place

@@ -14,6 +14,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from . tokens import generate_token
 from django.template import loader
+from store.models import Detail
+
 
 
 
@@ -29,21 +31,18 @@ def signup(request):
 
         if User.objects.filter(username=username):
             messages.error(request, "Username already exists, try other usernames")
-            return redirect('home')
 
         if User.objects.filter(email=email):
             messages.error(request, "Email already registered")
-            return redirect('home')
 
-        if len(username)>10:
-            messages.error(request, "Username must be under 10 characters")
+        if len(username)>12:
+            messages.error(request, "Username must be under 12 characters")
 
         if password != password2:
             messages.error(request, "Passwords do not match") 
 
         if not username.isalnum():
-            messages.error(request, "Username must be alphanumeric.")
-            return redirect('home')           
+            messages.error(request, "Username must be alphanumeric.")           
 
 
         myuser = User.objects.create_user(username, email, password)
@@ -68,7 +67,8 @@ def signup(request):
             'name': myuser.first_name,
             'domain': current_site.domain,
             'uid': urlsafe_base64_encode(force_bytes(myuser.pk)),
-            'token': generate_token.make_token(myuser)
+            'token': generate_token.make_token(myuser),
+            
         })
         email = EmailMessage(
         email_subject,
@@ -80,11 +80,12 @@ def signup(request):
         email.send()
         
         return redirect('signin')
+    details=Detail.objects.all().order_by('-id')
         
-        
-    return render(request, "accounts/signup.html")
+    return render(request, "accounts/signup.html",{'details':details})
 
 def activate(request,uidb64,token):
+    details=Detail.objects.all().order_by('-id')
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         myuser = User.objects.get(pk=uid)
@@ -99,7 +100,7 @@ def activate(request,uidb64,token):
         messages.success(request, "Your Account has been activated!!")
         return redirect('signin')
     else:
-        return render(request,'accounts/activation_failed.html')
+        return render(request,'accounts/activation_failed.html',{'details':details})
 
 
  
@@ -115,8 +116,9 @@ def signin(request):
 
         if user is not None:
             login(request, user)
-            fname = user.first_name
-            return render(request, "index.html", {"fname": fname})
+            messages.success(request, "You are logged in successfully")
+            
+            return redirect('home')
 
            
 
@@ -124,18 +126,20 @@ def signin(request):
             messages.error(request, "Username not found.")
             return redirect('signin')
 
-          
+    details=Detail.objects.all().order_by('-id')      
 
-    return render(request, "accounts/login.html")
+    return render(request, "accounts/login.html",{'details':details})
 
 def signout(request):
     logout(request)
-    messages.success(request, "Logged out successfully")
-    return redirect('home')
+    return redirect('signin')
 
 def myaccount(request):
+    details=Detail.objects.all().order_by('-id')
 
-    return render(request, "accounts/myaccount.html") 
+    return render(request, "accounts/myaccount.html",{'details':details}) 
+
+
 
 
 

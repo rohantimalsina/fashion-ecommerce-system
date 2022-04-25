@@ -2,7 +2,8 @@ from django.contrib import admin
 from .models import *
 
 
-
+class DetailsAdmin(admin.ModelAdmin):
+	list_display=('email','contact','address')
 class BannerAdmin(admin.ModelAdmin):
 	list_display=('alt_text','image_tag')
 
@@ -16,13 +17,13 @@ class ColorAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display=('id','title','category','status','is_featured')
-    list_editable=('status','is_featured')
+    list_display=('id','title','category','price','status','is_featured')
+    list_editable=('price','status','is_featured')
 
 
 # Product Attribute
 class ProductAttributeAdmin(admin.ModelAdmin):
-    list_display=('id','image_tag','product','price','color','size')
+    list_display=('id','image_tag','product','color','size')
 
 
 class CartAdmin(admin.ModelAdmin):
@@ -49,7 +50,7 @@ class OrderAdmin(admin.ModelAdmin):
 class ProductReviewAdmin(admin.ModelAdmin):
 	list_display=('user','product','review_text','get_review_rating')
 
-
+admin.site.register(Detail,DetailsAdmin)
 admin.site.register(Banner,BannerAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Color,ColorAdmin)
