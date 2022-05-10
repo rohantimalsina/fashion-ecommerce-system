@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block nav_item_about %}active{% endblock nav_item_about %} 
+{% block content %}
+
+{% load static %}
+
+
+<div class="login">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+             
+                <div class="login-form">
+                    <div class="col-md-6">
+                        <div class="about_box">
+                           <div class="titlepage">
+                              <h2>About us</h2>
+                           </div>
+                           <p>Elite Store is a shopping website where you can purchase products related to clothing and fashion. You can browse through our categories.</p>
+                           <a href="#">Contact Us</a>
+                        </div>
+                     </div>
+          <div class="about_img">
+             <figure><img  src="{% static "img/logo.png" %}" alt="#"/></figure>
+          </div>
+       </div>
+      
+    </div>
+ </div>
+</div>
+
+{% endblock %}

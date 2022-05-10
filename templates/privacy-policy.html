@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block nav_item_home %}active{% endblock nav_item_home %} 
+{% block content %}
+
+{% load static %}
+
+ <!-- Breadcrumb Start -->
+
+ <div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+           
+            <li class="breadcrumb-item active">Privacy Policy</li>
+        </ul>
+    </div>
+</div>
+<br>
+<!-- Breadcrumb End -->
+
+
+
+<div class="content">
+        
+
+    <div class="container-fluid">
+        <h2>Privacy Policy</h2><br>
+        <div class="row-fluid">
+            
+                
+<h3>What we do with your data</h3>
+<p>We collect, store and process your data for processing your purchase on the Site and any possible later claims, and to provide you with our services. We may collect personal information including, but not limited to, your title, name, gender, date of birth, email address, postal address, delivery address (if different), telephone number, mobile number, fax number, payment details, payment card details or bank account details.</p>
+
+<h3>Use of Cookies</h3>
+<p>We or our authorised service providers may use cookies, web beacons, and other similar technologies in connection with your use of the Site.</p>
+
+<h3>Use of Third Party Services</h3>
+<p>We may pass your details to other companies in our group. We may also pass your details to our agents and subcontractors to help us with any of our uses of your data set out in our Privacy Policy. For example, we may use third parties to assist us with delivering products to you, to help us to collect payments from you, to analyze data and to provide us with marketing or customer service assistance. We may also exchange information with third parties for the purposes of fraud protection and credit risk reduction.</p>
+
+
+<h3>Protection of Certain Personally-Identifying Information</h3>
+<p>We have in place appropriate technical and security measures to prevent unauthorized or unlawful access to or accidental loss of or destruction or damage to your information. When we collect data through the Site, we collect your personal details on a secure server. We use firewalls on our servers. Our security procedures mean that we may occasionally request proof of identity before we disclose personal information to you. You are responsible for protecting against unauthorized access to your password and to your computer.</p>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from .forms import *
+
 
 from elite import settings
 from django.core.mail import EmailMessage, send_mail
@@ -14,12 +16,13 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from . tokens import generate_token
 from django.template import loader
-from store.models import Detail
+from store.models import Detail,Order,Address
 
 
 
 
 def signup(request):
+    details=Detail.objects.all().order_by('-id')
 
     if request.method=="POST":
         fname = request.POST['fname']
@@ -31,18 +34,22 @@ def signup(request):
 
         if User.objects.filter(username=username):
             messages.error(request, "Username already exists, try other usernames")
+            return redirect('signup')
 
         if User.objects.filter(email=email):
             messages.error(request, "Email already registered")
+            return redirect('signup')
 
-        if len(username)>12:
-            messages.error(request, "Username must be under 12 characters")
 
         if password != password2:
             messages.error(request, "Passwords do not match") 
+            return redirect('signup')
 
         if not username.isalnum():
-            messages.error(request, "Username must be alphanumeric.")           
+            messages.error(request, "Username must be alphanumeric.")   
+            return redirect('signup') 
+
+                
 
 
         myuser = User.objects.create_user(username, email, password)
@@ -79,8 +86,8 @@ def signup(request):
         email.fail_silently = True
         email.send()
         
-        return redirect('signin')
-    details=Detail.objects.all().order_by('-id')
+        return redirect('home')
+    
         
     return render(request, "accounts/signup.html",{'details':details})
 
@@ -123,7 +130,7 @@ def signin(request):
            
 
         else:
-            messages.error(request, "Username not found.")
+            messages.error(request, "Invalid login credentials.")
             return redirect('signin')
 
     details=Detail.objects.all().order_by('-id')      
@@ -132,12 +139,48 @@ def signin(request):
 
 def signout(request):
     logout(request)
-    return redirect('signin')
+    messages.success(request, "Logged out successfully")
+    return redirect('home')
 
 def myaccount(request):
     details=Detail.objects.all().order_by('-id')
+    orders = Order.objects.filter(user=request.user).order_by('-id')
+    address = Address.objects.filter(user=request.user)
+    if request.method=='POST':
+        form=ProfileForm(request.POST,instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your profile has been updated.")
+    form=ProfileForm(instance=request.user)
 
-    return render(request, "accounts/myaccount.html",{'details':details}) 
+    return render(request, "accounts/myaccount.html",{'details':details,'orders':orders,'address':address,'form':form}) 
+
+def contact(request):
+    if request.method=='POST':
+        form=ContactForm(request.POST)
+        if form.is_valid():
+            messages.success(request, "Your message has been sent successfully.")
+            form.save()
+            
+    form=ContactForm
+    details=Detail.objects.all().order_by('-id')
+    
+    return render(request, 'accounts/contact.html',{'form':form,'details':details})
+
+
+def about(request):
+    details=Detail.objects.all().order_by('-id')
+    return render(request, 'store/about.html',{'details':details})
+
+def terms(request):
+    details=Detail.objects.all().order_by('-id')
+    return render(request, 'terms.html',{'details':details})
+
+def privacy_policy(request):
+    details=Detail.objects.all().order_by('-id')
+    return render(request, 'privacy-policy.html',{'details':details})
+
+
 
 
 

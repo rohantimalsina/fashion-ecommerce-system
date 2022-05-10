@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+  <div class="container-fluid">
+      <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'home' %}">Categories</a></li>
+          {% for product in data %}
+          {% if forloop.counter == 1 %}
+          <li class="breadcrumb-item active">{{product.category}}</li>
+          {% endif %}
+          {% endfor %}
+      </ul>
+  </div>
+</div><br>
+<!-- Breadcrumb End -->
+
+
+<main class="container my-4">
+    <!-- Featured Products -->
+    
+    {% for product in data %}
+    {% if forloop.counter == 1 %}
+    <h3 class="my-4 border-bottom pb-1">{{product.category}}</h3>
+    {% endif %}
+    {% endfor %}
+    
+    <div class="row">
+    {% for product in data %}
+      <div class="col-md-3 mb-4">
+          <div class="card shadow">
+              <a href="/product/{{product.slug}}/{{product.id}}"><img src="/media/{{product.image}}" class="card-img-top" style="height: 250px" alt="{{product.title}}"></a>
+              <div class="card-body">
+                        <p class="card-text"><a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a></p><br>
+                        
+                      </div>
+                      <div class="card-footer">
+                        
+                        <ul class="mb-0 list-inline">
+                          <li class="list-inline-item m-0 p-0">
+                          <h5><span class="product-price-{{product.id}}">Rs.{{product.sale_price}}</span></h5>
+                        <p><span class="product-price-{{product.id}} text-muted"><del>Rs.{{product.reg_price}}</del></span></p></li>
+          <li class="list-inline-item m-0 p-0">
+                  <form action="{% url 'add-to-cart' %}">
+                    <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
+                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-cart-plus" aria-hidden="true"></i></button>
+                  </form></li>
+                  <li class="list-inline-item m-0 p-0">
+          
+                    <form action="{% url 'add-to-wishlist' %}">
+                      <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
+                      <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-heart" aria-hidden="true"></i></button>
+                    </form></li>
+
+          
+                </ul>
+              </div>
+          </div>
+      </div>
+    {% endfor %}
+    </div>
+  </main>
+{% endblock %}

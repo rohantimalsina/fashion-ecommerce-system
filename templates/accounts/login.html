@@ -2,24 +2,21 @@
     {% load static %}
     {% block content %}
         
-        <!-- Breadcrumb Start -->
-        <div class="breadcrumb-wrap">
-            <div class="container-fluid">
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    
-                    <li class="breadcrumb-item active">Login</li>
-                </ul>
-            </div>
-        </div>
-        <!-- Breadcrumb End -->
         
         <!-- Login Start -->
         <div class="login">
             <div class="container-fluid">
+                <h4>Welcome, please login to continue.</h4>
                 <div class="row justify-content-left">
                     <div class="col-lg-6">
-                        
+                        {% for message in messages %}
+                      <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                        <p style="color:red">{{ message }}</p>
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                      </div>
+                      {% endfor %}
                         <div class="login-form">
                             <div class="row">
                                 <form method="post" action="/login">
@@ -35,21 +32,18 @@
                                     </div>
                                     
                                     
-                                    <button type="submit" class="btn btn-primary">Login</button>
+                                    <button type="submit" class="btn btn-primary">Login</button> <p><a href="{% url 'password_reset' %}" class="text-danger">Forgot Password?</a></p>
+                                    <p>New user? <a href="{% url 'signup' %}">Register here</a>.</p>
                                     {% if messages %}
-                                    {% for message in messages %}
-                      <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
-                          {{ message }}
-                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                      </div>
-                      {% endfor %}
+                                    
                       {% endif %}
                                   </form>
                                   
                                   
+                                  
                             </div>
+                            
+	
                             
                         </div>
                         

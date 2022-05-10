@@ -1,0 +1,51 @@
+
+{% extends 'base.html' %}
+{% block nav_item_home %}active{% endblock nav_item_home %} 
+{% block content %}
+
+{% load static %}
+
+ <!-- Breadcrumb Start -->
+ <div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="">Home</a></li>
+           
+            <li class="breadcrumb-item active">Register</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+ <div class="content"><br>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <h2 class="page-title">Terms and Conditions</h2>    <br>          
+<h3>Terms of Use</h3>
+<p>These Terms and Conditions constitute an agreement (“Agreement”) between you (“you”, “your”, “user”, “Customer”) and the Company.</p>
+
+<h3>DISCLAIMER</h3>
+<p>We further expressly disclaim any warranties or representations (express or implied) in respect of quality, suitability, accuracy, reliability, completeness, timeliness, performance, safety, merchantability, fitness for a particular purpose, or legality of the products listed or displayed or transacted or the content (including product or pricing information and/or specifications) on the Site. </p>
+
+<h3>Termination</h3>
+<p>In addition to any other legal or equitable remedies, we may, without prior notice to you, immediately terminate the Terms and Conditions or revoke any or all of your rights granted under the Terms and Conditions. Upon any termination of this Agreement, you shall immediately cease all access to and use of the Site and we shall, in addition to any other legal or equitable remedies, immediately revoke all password(s) and account identification issued to you and deny your access to and use of this Site in whole or in part. </p>
+
+<h3>Use of Services & Account</h3>
+<p>To access certain services offered by the platform, we may require that you create an account with us or provide personal information to complete the creation of an account. We may at any time in our sole and absolute discretion, invalidate the username and/or password without giving any reason or prior notice and shall not be liable or responsible for any losses suffered by, caused by, arising out of, in connection with or by reason of such request or invalidation.</p> 
+
+<h3>CONTINUED AVAILABILITY OF THE SITE</h3>
+<p>We will do our utmost to ensure that access to the Site is consistently available and is uninterrupted and error-free. However, due to the nature of the Internet and the nature of the Site, this cannot be guaranteed. Additionally, your access to the Site may also be occasionally suspended or restricted to allow for repairs, maintenance, or the introduction of new facilities or services at any time without prior notice.</p> 
+
+<h3>Intellectual Property Ownership</h3>
+<p>All Materials, Services, Accounts, and content, including, but not limited to, policy information, text, software, music, sound, photographs, video, graphics, the arrangement of text and images, commercially produced information, and other material contained on the Site or through the Services (“Content”), are provided by The Company unless indicated otherwise. Welsh onion tigernut broccoli asparagus brussels sprout jícama eggplant earthnut pea cress chickpea gourd zucchini. Radicchio lentil cucumber groundnut endive kohlrabi winter purslane. Seakale plantain quandong celtuce shallot fennel seakale epazote groundnut dandelion.</p>
+
+<h3>Privacy</h3>
+<p>Please see our <a href="{% url 'privacy-policy' %}">Privacy Policy</a> as set forth on the site.</p>
+
+
+
+                
+        </div>
+    </div>
+
+    {% endblock %}

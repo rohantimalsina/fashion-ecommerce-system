@@ -2,12 +2,21 @@
 {% block content %}
 {% load static %}
         
+
+<style>
+    input[type=text], input[type=email], textarea {
+        width: 100%;
+        padding: 6px 10px;
+        margin: 10px 0;
+        display: inline-block;
+       }
+    </style>
         <!-- Breadcrumb Start -->
         <div class="breadcrumb-wrap">
             <div class="container-fluid">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Products</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                   
                     <li class="breadcrumb-item active">My Account</li>
                 </ul>
             </div>
@@ -23,21 +32,32 @@
                             <a class="nav-link active" id="profile-nav" data-toggle="pill" href="#profile-tab" role="tab"><i class="fa fa-tachometer-alt"></i>Profile</a>
                             <a class="nav-link" id="account-nav" data-toggle="pill" href="#account-tab" role="tab"><i class="fa fa-user"></i>Edit Details</a>
                             <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i class="fa fa-shopping-bag"></i>Orders</a>
-                            <a class="nav-link" id="payment-nav" data-toggle="pill" href="#payment-tab" role="tab"><i class="fa fa-credit-card"></i>Payment Method</a>
+                            <a class="nav-link" id="address-nav" data-toggle="pill" href="#address-tab" role="tab"><i class="fa fa-credit-card"></i>Address</a>
+                            <a class="nav-link" id="wishlist-nav" href="{% url 'wishlist' %}" role="tab"><i class="fa fa-heart"></i>My Wishlist</a>
                             
-                            <a class="nav-link" href="logout"><i class="fa fa-sign-out-alt"></i>Logout</a>
+                            <a class="nav-link" href="{% url "signout" %}"><i class="fa fa-sign-out-alt"></i>Logout</a>
                         </div>
                     </div>
                     <div class="col-md-9">
+                        
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="profile-tab" role="tabpanel" aria-labelledby="profile-nav">
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                                </div>
+                                {% endfor %}
                                 <h4>Profile</h4>
+                               
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p>Name: {{user.first_name}} {{user.last_name}}</p>
                                         <p>Username: {{user.username}}</p>
                                         <p>Email: {{user.email}}</p>
-                                        <p>Mobile: 9801234567</p>
+                                        
                                         
                                         
                                     </div>
@@ -48,76 +68,116 @@
                                    
                                 </div>
                             </div>
+
+                            
                             <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
                                 <div class="table-responsive">
+                                    
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>No</th>
                                                 <th>Product</th>
-                                                <th>Date</th>
+                                                <th>Image</th>
+                                                <th>Quantity</th>
                                                 <th>Price</th>
+                                                <th>Date</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                
-                                            </tr>
-                                            <tr>
-                                                
-                                            </tr>
-                                            <tr>
-                                                
-                                            </tr>
+
+                                            {% if orders %} 
+                      {% for order in orders %}
+                        <tr>
+                          <td>{{order.id}}</td>
+                          <td>{{order.product.title}}</td>
+                         <td> <img src="/media/{{order.product.image}}" class="card-img-top" alt="{{product.title}}" height="100"></a></td>
+                          <td>{{order.quantity}}</td>
+                          <td>{{order.price}}</td>
+                          <td>{{order.ordered_date}}</td>
+                          <td>{{order.status}}</td>
+                          
+                          
+                        </tr>
+                      {% endfor %}
+                      {% else %}
+                    
+                    <tr>
+                      <td class="text-danger" colspan="7">You've not Ordered anything yet.<hr>
+                          <a href="{% url 'product-list' %}"><button type="button" class="btn btn-primary">Continue Shopping</button></a>
+                      </td>
+                    </tr>
+                    {% endif %}
+                    
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="payment-tab" role="tabpanel" aria-labelledby="payment-nav">
-                                <h4>Payment Method</h4>
-                         
+
+                            <div class="tab-pane fade" id="address-tab" role="tabpanel" aria-labelledby="address-nav">
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card-header">Addresses <span class="float-right"><a href="{% url 'add-address' %}">Add Address</a></span></div>
+                                        <div class="login-form">
+                                            {% if address %}
+                                                {% for add in address %}
+                                                    <h4 class="mb-3">Address {{forloop.counter}}</h4> 
+                                                    
+                                                    <span class="float-right"><a href="{% url 'update-address' add.id %}" class="float-right"><i class="fa fa-edit"></i></a></span>
+                            
+                                                    <p>
+                                                        <strong>Place: </strong>{{add.place}} <br>
+                                                        <strong>City: </strong>{{add.city}} <br>
+                                                        <strong>State: </strong>{{add.state}} <br>
+                                                    </p>
+                            
+                                                    <hr>
+                                                {% endfor %}
+                                            {% else %}
+                                            <div class="text-danger">
+                                              Address not Added.
+                                            </div>
+                                            {% endif %}
+                                            
+                                          </div>
+                                    </div>
+                                  
+                                </div>
                             </div>
+                            
                             <div class="tab-pane fade" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
                                 <h4>Account Details</h4>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input class="form-control" type="text" placeholder="First Name">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input class="form-control" type="text" placeholder="Last Name">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input class="form-control" type="text" placeholder="Mobile">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input class="form-control" type="text" placeholder="Email">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <input class="form-control" type="text" placeholder="Address">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <button class="btn">Update Account</button>
-                                        <br><br>
-                                    </div>
+                                        <div class="row justify-content-left">
+                                            <div class="col-lg-6">
+                                                <div class="login-form">
+                                                    
+                                                    <div class="row">
+                        
+                                <!--Grid column-->
+                                <div class="col-md-6">
+                                    
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        {{form.as_table}}
+                                        
+                                            <br><br>
+                                                <input type="submit" value="Save" class="btn btn-primary">
+                                            
+                                        
+                                    </form>
                                 </div>
-                                <h4>Password change</h4>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <input class="form-control" type="password" placeholder="Current Password">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input class="form-control" type="text" placeholder="New Password">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input class="form-control" type="text" placeholder="Confirm Password">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <button class="btn">Save Changes</button>
-                                    </div>
-                                </div>
+                               
+                        
                             </div>
+                        </div>
+                        </div>
+                        </div>
+                                
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

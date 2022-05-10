@@ -10,7 +10,11 @@ urlpatterns = [
     path('login', views.signin, name="signin"),
     path('signout', views.signout, name="signout"),
     path('activate/<uidb64>/<token>', views.activate, name='activate'),
-    path('myaccount', views.myaccount, name="myaccount"),
+    path('myaccount/', views.myaccount, name="myaccount"),
+    path('contact', views.contact, name="contact"),
+    path('about', views.about, name="about"),
+    path('terms', views.terms, name="terms"),
+    path('privacy-policy', views.privacy_policy, name="privacy-policy"),
     
 
     

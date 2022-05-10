@@ -17,13 +17,10 @@ class ColorAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display=('id','title','category','price','status','is_featured')
-    list_editable=('price','status','is_featured')
+    list_display=('id','title','image_tag','category','reg_price','sale_price','size','color','status','is_featured')
+    list_editable=('sale_price','status','is_featured','size')
+    prepopulated_fields = {"slug": ("title", )}
 
-
-# Product Attribute
-class ProductAttributeAdmin(admin.ModelAdmin):
-    list_display=('id','image_tag','product','color','size')
 
 
 class CartAdmin(admin.ModelAdmin):
@@ -41,7 +38,7 @@ class AddressAdmin(admin.ModelAdmin):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('user', 'product', 'quantity', 'status', 'ordered_date')
+    list_display = ('user', 'product', 'quantity', 'status', 'ordered_date','price')
     list_editable = ('quantity', 'status')
     list_filter = ('status', 'ordered_date')
     list_per_page = 20
@@ -53,10 +50,7 @@ class ProductReviewAdmin(admin.ModelAdmin):
 admin.site.register(Detail,DetailsAdmin)
 admin.site.register(Banner,BannerAdmin)
 admin.site.register(Category,CategoryAdmin)
-admin.site.register(Color,ColorAdmin)
-admin.site.register(Size)
 admin.site.register(Product,ProductAdmin)
-admin.site.register(ProductAttribute,ProductAttributeAdmin)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(Cart, CartAdmin)
 admin.site.register(Order, OrderAdmin)

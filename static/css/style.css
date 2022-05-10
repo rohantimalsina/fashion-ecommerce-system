@@ -147,7 +147,7 @@ h2 {
     margin-top: 0;
     border: 0;
     border-radius: 0;
-    background: #50D1EE;
+    background: #FF6F61;
 }
 
 .nav .dropdown-menu a.active {
@@ -158,7 +158,7 @@ h2 {
 @media (min-width: 768px) {
     .nav,
     .nav .navbar {
-        background: #50D1EE !important;
+        background: #FF6F61 !important;
     }
     
     .nav .navbar-brand {
@@ -184,7 +184,7 @@ h2 {
     
     .nav,
     .nav .navbar {
-        background: #000000 !important;
+        background: #FF6F61  !important;
     }
     
     .nav a.nav-link {
@@ -333,12 +333,12 @@ h2 {
     color: #353535;
 }
 .header .navbar a:hover {
-    color: #50D1EE;
+    color: #FF6F61;
 }
 
 
 .header .navbar i {
-    color: #50D1EE;
+    color: #FF6F61;
     width: 20px;
     text-align: center;
     margin-right: 8px;
@@ -489,18 +489,6 @@ h2 {
     background: #ffffff;
 }
 
-.category .category-item.ch-400 {
-    height: 400px;
-}
-
-.category .category-item.ch-250 {
-    height: 250px;
-}
-
-.category .category-item.ch-150 {
-    height: 150px;
-}
-
 .category .category-item img {
     width: 100%; 
     height: 100%; 
@@ -515,7 +503,7 @@ h2 {
     height: 100%;
     display: flex;
     align-items: center;
-    background: rgba(255, 111, 97, .7);
+    background: rgba(219, 240, 245, 0.7);
     transition: all 0.3s;
     opacity: 0;
 }
@@ -529,7 +517,7 @@ h2 {
     padding: 15px;
     width: 100%;
     text-align: center;
-    color: #ffffff;
+    color: #000000;
     font-size: 16px;
     transition: all 0.3s;
 }
@@ -541,160 +529,21 @@ h2 {
 
 
 
-/**********************************/
-/******** Product Item CSS ********/
-/**********************************/
-.product-item {
-    position: relative;
-}
-
-.product-item .product-title {
-    padding: 15px;
-    text-align: center;
-    background: #000000;
-    transition: all .3s;
-}
-
-
-
-.product-item .product-title a,
-.product-item .product-title .ratting {
-    position: relative;
-    width: 100%;
-}
-
-.product-item .product-title a {
-    margin-bottom: 5px;
-    color: #ffffff;
-    font-size: 18px;
-}
-
-.product-item .product-title .ratting i {
-    font-size: 14px;
-    color: #FF6F61;
-}
-
-.product-item .product-content .price span {
-    margin-left: 12px;
-    text-decoration: line-through;
-    font-weight: 700;
-    color: #999999;
-}
-
-
-
-
-
-.product-item .product-image {
-    position: relative;
-    overflow: hidden;
-}
-
-.product-item .product-image a {
-    display: block;
-    background: #ffffff;
-    transition: .3s;
-}
-
-.product-item .product-image img {
-    width: 100%; 
-    transition: all .3s;
-}
-
-.product-item:hover .product-image img {
-    transform: scale(1.2);
-}
-
-.product-item .product-image .product-action {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 111, 97, .5);
-    transition: all .3s;
-    font-size: 0;
-    z-index: 1;
-    opacity: 0;
-}
-
-.product-item .product-image .product-action a {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    margin-right: 5px;
-    padding: 7px 0 10px 0;
-    font-size: 16px;
-    text-align: center;
-    color: #ffffff;
-    background: #FF6F61;
-    border: 1px solid #ffffff;
-    border-radius: 4px;
-    transition: all .3s;
-    margin-top: 50px;
-}
-
-
-
-.product-item .product-image .product-action a:last-child {
-    margin-right: 0;
-}
-
-
-
-.product-item .product-price {
-    padding: 20px;
-    background: #000000;
-    transition: all .3s;
-}
-
-.product-item:hover .product-price {
-    background: #FF6F61;
-}
-
-.product-item .product-price h3 {
-    display: inline-block;
-    color: #ffffff;
-    margin: 0;
-}
-
-.product-item .product-price h3 span {
-    font-size: 16px;
-}
-
-.product-item .product-price .btn {
-    float: right;
-    border: none;
-    color: #000000;
-    background: #FF6F61;
-}
-
-.product-item .product-price .btn i {
-    margin-right: 5px;
-}
-
 
 /**********************************/
 /******** Featured Product ********/
 /**********************************/
-.featured-product {
-    position: relative;
-    padding: 30px 0;
+.card{
+    height: 100%;
 }
 
-.recent-product {
-    position: relative;
-    padding: 30px 0;
-}
-
-.product .section-header {
-    margin-bottom: 30px;
-    padding: 20px 30px 15px 30px;
+.card-text {
     color: #FF6F61;
     background: #ffffff;
+    margin-top: auto;
+}
+.card-body{
+    height: 80px;
 }
 
 
@@ -1216,4 +1065,42 @@ h2 {
 
 .my-account .tab-content .table td {
     vertical-align: middle;
+}
+
+
+
+/**********************************/
+/*********** Feature CSS **********/
+/**********************************/
+.feature {
+    position: relative;
+}
+
+.feature .feature-col {
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.feature .feature-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 30px 15px;
+    text-align: center;
+    background: #ffffff;
+}
+
+.feature .feature-content i {
+    color: #FF6F61;
+    font-size: 60px;
+    margin-bottom: 30px;
+}
+
+.feature .feature-content h2 {
+    font-size: 18px;
+}
+
+.feature .feature-content p {
+    font-size: 15px;
+    margin: 0;
 }

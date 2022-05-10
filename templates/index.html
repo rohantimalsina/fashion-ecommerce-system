@@ -3,16 +3,14 @@
 {% block content %}
 
 {% load static %}
-{% if messages %}
 {% for message in messages %}
-<div class="container mt-5 alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
-{{ message }}
-<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-{% endfor %}
-{% endif %}   
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
+    {% endfor %}
         <!-- Main Slider Start -->
         <div class="header">
             <div class="container-fluid">
@@ -20,30 +18,18 @@
                     <div class="col-md-3">
                         <nav class="navbar bg-light">
                             <ul class="navbar-nav">
-                    
+                              {% for cat in category %}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fa fa-shopping-bag"></i>Top Sellings</a>
+                                    <a class="nav-link" href="/category-products/{{cat.id}}">{{cat.title}}</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fa fa-plus-square"></i>New Arrivals</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fa fa-male"></i>Men Clothes</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fa fa-female"></i>Women Clothes</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fa fa-tshirt"></i>Sportswear</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fas fa-mitten"></i>Winter Clothes</a>
-                                </li>
-                              
+                        
+                                {% endfor %}
                             </ul>
+                            
                         </nav>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-9">
+                      
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             {% for banner in banners %}
@@ -55,38 +41,190 @@
                          {% endfor %}
                         </ol>
                         
-                        <div class="carousel-inner">
+                        <div class="carousel-inner" style="height: 350px">
                             {% for banner in banners %}
                             {% if forloop.counter == 1 %}
                         <div class="carousel-item active">
                             {% else %}
                           <div class="carousel-item">
                             {% endif %}
-                            <img class="d-block w-100" src="/media/{{banner.img}}" alt="...">
+                            <a href = "{% url 'product-list' %}"><img class="img-fluid" src="/media/{{banner.img}}" alt="..."></a>
                           </div>
                           {% endfor %}
                           
                         </div>
                         </div>
                         
-                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="sr-only">Next</span>
-                        </a>
+                        
                       </div>
-                    </div>
+                     {% comment %}  <div class="col-md-3">
+                        <div class="category-item ch-250">
+                          {% for cat in category %}
+                         {% if forloop.counter == 2 %}
+                          <a href = "{% url 'cart' %}"><img class="d-block w-100" src="/media/{{cat.image}}" alt="..."></a>
+                            <a class="category-name" href="">
+                                <p>{{cat.title}}</p>
+                            </a>
+                            {% endif %}
+                           {% endfor %}
+                        </div>
+                    </div> {% endcomment %}
+                   
                 </div>
+                
                
               
                 </div>
+                
+            </div>
+            
+        </div>
+      
+        <!-- Main Slider End -->    
+
+        <!-- Feature Start-->
+        <div class="feature">
+          <div class="container-fluid">
+              <div class="row align-items-center">
+                  <div class="col-lg-3 col-md-6 feature-col">
+                      <div class="feature-content">
+                          <i class="fa fa-check"></i>
+                          <h2>Quality Products</h2>
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6 feature-col">
+                      <div class="feature-content">
+                        <i class="fa fa-truck-fast"></i>
+                          <h2>Cash on Delivery</h2>
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6 feature-col">
+                      <div class="feature-content">
+                          <i class="fa fa-sync-alt"></i>
+                          <h2>14 Days Return</h2>
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6 feature-col">
+                      <div class="feature-content">
+                          <i class="fa fa-phone-volume"></i>
+                          <h2>24/7 Support</h2>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Feature End-->   
+
+        
+         <!-- Category Start-->
+         <div class="category">
+          
+          <div class="container-fluid">
+            <h3>Categories</h3>
+              <div class="row">
+                
+                  <div class="col-md-3">
+                      <div class="category-item w-50 p-3">
+                        {% for cat in category %}
+                       {% if forloop.counter == 1 %}
+                        <a href = "/category-products/{{cat.id}}"><img class="img-thumbnail" src="/media/{{cat.image}}" alt="..."></a>
+                          <a class="category-name" href="/category-products/{{cat.id}}">
+                              <p>{{cat.title}}</p>
+                          </a>
+                          {% endif %}
+                         {% endfor %}
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="category-item w-50 p-3 ">
+                      {% for cat in category %}
+                     {% if forloop.counter == 2 %}
+                      <a href = "/category-products/{{cat.id}}"><img class="img-thumbnail" src="/media/{{cat.image}}" alt="..."></a>
+                        <a class="category-name" href="/category-products/{{cat.id}}">
+                            <p>{{cat.title}}</p>
+                        </a>
+                        {% endif %}
+                       {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="category-item w-50 p-3 ">
+                    {% for cat in category %}
+                   {% if forloop.counter == 3 %}
+                    <a href = "/category-products/{{cat.id}}"><img class="img-thumbnail" src="/media/{{cat.image}}" alt="..."></a>
+                      <a class="category-name" href="/category-products/{{cat.id}}">
+                          <p>{{cat.title}}</p>
+                      </a>
+                      {% endif %}
+                     {% endfor %}
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div class="category-item w-50 p-4 ">
+                  {% for cat in category %}
+                 {% if forloop.counter == 4 %}
+                  <a href = "/category-products/{{cat.id}}"><img class="img-thumbnail" src="/media/{{cat.image}}" alt="..."></a>
+                    <a class="category-name" href="/category-products/{{cat.id}}">
+                        <p>{{cat.title}}</p>
+                    </a>
+                    {% endif %}
+                   {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-3">
+              <div class="category-item w-50 p-3 ">
+                {% for cat in category %}
+               {% if forloop.counter == 5 %}
+                <a href = "/category-products/{{cat.id}}"><img class="img-thumbnail" src="/media/{{cat.image}}" alt="..."></a>
+                  <a class="category-name" href="/category-products/{{cat.id}}">
+                      <p>{{cat.title}}</p>
+                  </a>
+                  {% endif %}
+                 {% endfor %}
+              </div>
+          </div>
+          <div class="col-md-3">
+            <div class="category-item w-50 p-3 ">
+              {% for cat in category %}
+             {% if forloop.counter == 6 %}
+              <a href = "/category-products/{{cat.id}}"><img class="img-thumbnail" src="/media/{{cat.image}}" alt="..."></a>
+                <a class="category-name" href="/category-products/{{cat.id}}">
+                    <p>{{cat.title}}</p>
+                </a>
+                {% endif %}
+               {% endfor %}
             </div>
         </div>
-        <!-- Main Slider End -->    
-        
+        <div class="col-md-3">
+          <div class="category-item w-50 p-3 ">
+            {% for cat in category %}
+           {% if forloop.counter == 7 %}
+            <a href = "/category-products/{{cat.id}}"><img class="img-thumbnail" src="/media/{{cat.image}}" alt="..."></a>
+              <a class="category-name" href="/category-products/{{cat.id}}">
+                  <p>{{cat.title}}</p>
+              </a>
+              {% endif %}
+             {% endfor %}
+          </div>
+      </div>
+      <div class="col-md-3">
+        <div class="category-item w-50 p-3 ">
+          {% for cat in category %}
+         {% if forloop.counter == 8 %}
+          <a href = "/category-products/{{cat.id}}"><img class="img-thumbnail" src="/media/{{cat.image}}" alt="..."></a>
+            <a class="category-name" href="/category-products/{{cat.id}}">
+                <p>{{cat.title}}</p>
+            </a>
+            {% endif %}
+           {% endfor %}
+        </div>
+    </div>
+                
+                 
+              </div>
+          </div>
+      </div>
+      <!-- Category End-->  
         
         <main class="container my-4">
             <!-- Featured Products -->
@@ -95,41 +233,43 @@
             {% for product in data %}
                 <div class="col-md-3 mb-4">
                     <div class="card shadow">
-                      <a href="/product/{{product.slug}}/{{product.id}}"><img src="/media/{{product.productattribute_set.first.image}}" class="card-img-top" alt="{{product.title}}"></a>
+                      <a href="/product/{{product.slug}}/{{product.id}}"><img src="/media/{{product.image}}" class="card-img-top" style="height: 250px" alt="{{product.title}}"></a>
                       <div class="card-body">
-                        <h5 class="card-text"><a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a></h5>
-                  <h6>$ <span class="product-price-{{product.id}}">{{product.price}}</span></h6>
+                        <p class="card-text"><a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a></p><br>
+                        
                       </div>
                       <div class="card-footer">
+                        
                         <ul class="mb-0 list-inline">
-                  <!-- {{product.productattribute_set.first.color.title}}
-                  <input type="hidden" value="1" class="form-control product-qty-{{product.id}}" id="productQty" />
-                  <input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image}}" />
-                  <input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
-                  <input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />--> 
+                          <li class="list-inline-item m-0 p-0">
+                          <h5><span class="product-price-{{product.id}}">Rs.{{product.sale_price}}</span></h5>
+                        <p><span class="product-price-{{product.id}} text-muted"><del>Rs.{{product.reg_price}}</del></span></p></li>
+                          
                   <li class="list-inline-item m-0 p-0">
                           <form action="{% url 'add-to-cart' %}">
                             <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
                             <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-cart-plus" aria-hidden="true"></i></button>
                           </form></li>
                           <li class="list-inline-item m-0 p-0">
-                  {% if user.is_authenticated %}
-                          <button class="btn btn-sm btn-danger add-wishlist" data-product="{{product.id}}"><i class="fa fa-heart"></i></button></li>
-                  {% else %}
-                  <button class="btn btn-sm btn-danger disabled"><i class="fa fa-heart"></i></button>
-                  {% endif %}
-                          <span class="float-right">
-                              4.5/5
-                              <i class="fa fa-star text-warning"></i>
-                          </span>
+                  
+                            <form action="{% url 'add-to-wishlist' %}">
+                              <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
+                              <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-heart" aria-hidden="true"></i></button>
+                            </form></li>
+                         
+  
+                  
                         </ul>
                       </div>
                     </div>
                 </div>
             {% endfor %}
             </div>
-            <p class="my-4 text-center"><a href="{% url 'home' %}" class="btn btn-dark btn-sm">All Products <i class="fa fa-long-arrow-alt-right"></i></a></p>
+            <p class="my-4 text-center"><a href="{% url 'product-list' %}" class="btn btn-dark btn-sm">All Products <i class="fa fa-long-arrow-alt-right"></i></a></p>
         </main>
+
+
+
 
 
 

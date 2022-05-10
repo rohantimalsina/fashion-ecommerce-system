@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %} My wishlist{% endblock %}
+
+{% block content %}
+
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'myaccount' %}">My Account</a></li>
+            <li class="breadcrumb-item active">My Wishlist</li>
+        </ul>
+    </div>
+</div><br>
+<!-- Breadcrumb End -->
+{% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
+    {% endfor %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            {% if wishlist_products %}
+            <h4>Items in my wishlist</h4><hr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Size</th>
+                        <th>Color</th>
+                        <th>Price</th>
+                        
+                        
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for cp in wishlist_products %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td><img src="/media/{{cp.product.image}}" class="card-img-top" alt="{{product.title}}" height="100"></a></td>
+                        <td>{{cp.product.title}}</td>
+                        <td>{{cp.product.size}}</td>
+                        <td>{{cp.product.color}}</td>
+                        <td>Rs.{{cp.product.sale_price}}</td>
+                       
+                        <td>{{cp.sale_price}}</td>
+                        <td>
+                            <a href="{% url 'remove-wishlist' cp.id %}"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                   
+                </tbody>
+            </table>
+        
+            {% else %}
+            <div class="jumbotron">
+                <div class="container-fluid">
+                    <div class="row justify-content-left">
+                        <div class="col-lg-6">
+                            
+                            <div class="login-form">
+                                
+                                <h4> No items in your wishlist.</h4>
+                                
+                                
+                                <a href="{% url 'product-list' %}"><button type="button" class="btn btn-primary">Continue Shopping</button></a>
+            </div>
+       
+            </div>
+            </div>
+            </div>
+            </div>
+
+            {% endif %}
+
+        </div>
+
+       
+
+    </div>
+</div> 
+{% endblock %}

@@ -3,9 +3,19 @@
 {% block title %} My cart{% endblock %}
 
 {% block content %}
+{% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
+    {% endfor %}
+{% if cart_products %}
+
 <div class="container">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
             <h4>Items in my cart</h4><hr>
             <table class="table">
                 <thead>
@@ -13,76 +23,128 @@
                         <th>SN</th>
                         <th>Image</th>
                         <th>Product</th>
-                        <th>Size</th>
+                        
                         <th>Color</th>
                         <th>Rate</th>
                         <th>Quantity</th>
                         <th>Total</th>
-                        <th>Action</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     {% for cp in cart_products %}
                     <tr>
                         <td>{{forloop.counter}}</td>
-                        <td><img src="/media/{{cp.product.productattribute_set.first.image}}" class="card-img-top" alt="{{product.title}}" height="100"></a></td>
+                        <td><img src="/media/{{cp.product.image}}" class="card-img-top" alt="{{product.title}}" height="100"></a></td>
                         <td>{{cp.product.title}}</td>
-                        <td>{{cp.product.productattribute_set.first.size}}</td>
-                        <td>{{cp.product.productattribute_set.first.color}}</td>
-                        <td>{{cp.product.price}}</td>
-                        <td>{{cp.quantity}}</td>
-                        <td>{{cp.total_price}}</td>
+                       
+                        <td>{{cp.product.color}}</td>
+                        <td>{{cp.product.sale_price}}</td>
                         <td>
-                            <a href="{% url 'home' %}?action=inc" class="btn btn-primary"> + </a>
-                            <a href="{% url 'home' %}?action=dcr" class="btn btn-warning"> - </a>
-                            <a href="{% url 'home' %}?action=rmv" class="btn btn-danger"> x </a>
+                            
+                            <a href="{% url 'minus-cart' cp.id %}"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                            {{cp.quantity}}
+                            <a href="{% url 'plus-cart' cp.id %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                            
                         </td>
+                        <td>{{cp.total_amt}}</td>
+                        <td>
+                            <a href="{% url 'remove-cart' cp.id %}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            
+                        </td>
+                        
+                        
                     </tr>
                     {% endfor %}
+                    
+                    
                     <tr>
-                        <th colspan="7" class="text-right">Sub Total</th>
+                        
+                        <th colspan="6" class="text-right">Sub Total</th>
                         <th>Rs. {{amount}}</th>
-                        {% if cart.cartproduct_set.all %}
-                        <th><a href="{% url 'ecomapp:emptycart' %}">Empty Cart</a></th>
-                        {% endif %}
                     </tr>
                     <tr>
-                        <th colspan="7" class="text-right">Shipping Charge</th>
+                        <th colspan="6" class="text-right">Shipping Charge</th>
                         <th>Rs.{{shipping_amount}}</th>
                     </tr>
                     <tr>
-                        <th colspan="7" class="text-right">Total Amount</th>
+                        <th colspan="6" class="text-right">Total Amount</th>
                         <th>Rs.{{total_amount}}</th>
                     </tr>
+                    <tr>
+        
+                    </tr>
+                    
                 </tbody>
             </table>
-
-            
-
         </div>
-
         <div class="col-md-3">
-            <h5 class="text-uppercase my-5">Select Shipping Address</h5>
+            <div class="jumbotron">
+            {% if addresses %}
+            <h5 class="text-uppercase my-3">Proceed To Checkout</h5>
                   
             <form action="{% url 'checkout' %}" id="myform">
 
-              {% if addresses %}
+              
                 {% for address in addresses %}
                   <div class="mb-3">
                     
                   <input type="radio" name="address" value="{{address.id}}" checked > <strong>Address {{forloop.counter}}</strong> <br>
-                  ( {{address.locality}}, {{address.city}}, {{address.state}} )
+                  ( {{address.place}}, {{address.city}}, {{address.state}} )
                   </div>
                 {% endfor %}
-              {% endif %}
+                <p><a class="btn btn-dark btn-large" href="{% url 'myaccount' %}">Edit Address</a></p>
+              
 
 
               {% comment %} For Cash on Delivery {% endcomment %}
               <button type="submit" class="btn btn-success" type="submit">Checkout <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
 
             </form>
+
+            {% else %}
+            
+            <h5 class="text-uppercase my-3 text-danger">Select Shipping Address</h5>
+            {% if messages %}
+                                    {% for message in messages %}
+                      <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                          {{ message }}
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                      </div>
+                      {% endfor %}
+                      {% endif %}
+                
+                  <p><a class="btn btn-primary btn-large" href="{% url 'myaccount' %}">Add Address</a></p>
+                </div>
+                {% endif %}
+            </div>
         </div>
+
+        
 
     </div>
 </div>
+
+{% else %}
+<div class="login">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                
+                <div class="login-form">
+                    <h4> No items in the cart </h4>
+                    <div class="row">
+
+
+</div>
+<a href="{% url 'product-list' %}"><button type="button" class="btn btn-primary">Continue Shopping</button></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endif %}
 {% endblock %}
